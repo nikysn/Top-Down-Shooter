@@ -6,7 +6,7 @@ public class EnemyMover : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private Player _target;
-    [SerializeField] private float _bulletForce = 15f;
+   
     private Rigidbody2D _rigidbody;
     private Vector2 _movement;
     private bool _bulletInTrigger = false;
