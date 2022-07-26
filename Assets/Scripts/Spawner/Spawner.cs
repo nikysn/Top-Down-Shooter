@@ -7,16 +7,13 @@ public class Spawner : ObjectPool
     [SerializeField] private Enemy _enemyPrefab;
     [SerializeField] private float _secondsBetweenSpawn;
     [SerializeField] private Transform[] _spawnPoints;
-    
 
     private float _elapserTime = 0;
-
 
     private void SetEnemy(Enemy enemy, Vector3 spawnPoint)
     {
         enemy.gameObject.SetActive(true);
         enemy.transform.position = spawnPoint;
-        
     }
 
     private void Start()

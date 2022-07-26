@@ -5,11 +5,9 @@ using UnityEngine;
 public class PlayerTracker : MonoBehaviour
 {
     [SerializeField] Player _player;
-    [SerializeField] private float _xOffset;
-
 
     private void Update()
     {
-        transform.position = new Vector3(_player.transform.position.x - _xOffset, transform.position.y,transform.position.z);
+        transform.position = new Vector3(_player.transform.position.x, transform.position.y,transform.position.z);
     }
 }
