@@ -407,7 +407,7 @@ Transform:
   m_Children:
   - {fileID: 1663540218}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1295936661
 GameObject:
@@ -441,7 +441,7 @@ MonoBehaviour:
   _container: {fileID: 1497277079}
   _capacity: 15
   _target: {fileID: 1703839742}
-  _enemyPrefab: {fileID: 7893231744647695283, guid: 2a4258153ecf3054f828919b0f8fffe4, type: 3}
+  _enemyPrefab: {fileID: 1286168203316373979, guid: 2a4258153ecf3054f828919b0f8fffe4, type: 3}
   _secondsBetweenSpawn: 1
   _spawnPoints:
   - {fileID: 1547168737}
@@ -5546,9 +5546,13 @@ PrefabInstance:
       propertyPath: _moveSpeed
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5613943001621153041, guid: c4dca53d4265c0d46bc57887f602efec, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5613943001621153042, guid: c4dca53d4265c0d46bc57887f602efec, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5613943001621153042, guid: c4dca53d4265c0d46bc57887f602efec, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5593,6 +5597,14 @@ PrefabInstance:
     - target: {fileID: 5613943001621153044, guid: c4dca53d4265c0d46bc57887f602efec, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5613943001621154542, guid: c4dca53d4265c0d46bc57887f602efec, type: 3}
+      propertyPath: _bulletPrefab
+      value: 
+      objectReference: {fileID: 6480317818874503100, guid: 23b6759fd8a3dcc44829fc19b994bfa2, type: 3}
+    - target: {fileID: 5613943001621154542, guid: c4dca53d4265c0d46bc57887f602efec, type: 3}
+      propertyPath: _startTimeBtwShots
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4dca53d4265c0d46bc57887f602efec, type: 3}

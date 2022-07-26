@@ -10,7 +10,6 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] Player _target;
     private List<Enemy> _pools = new List<Enemy>();
 
-
     protected void Initialize(Enemy prefab)
     {
         for (int i = 0; i < _capacity; i++)
@@ -18,7 +17,6 @@ public class ObjectPool : MonoBehaviour
             Enemy spawned = Instantiate(prefab, _container.transform);
             spawned.Init(_target);
             spawned.gameObject.SetActive(false);
-
             _pools.Add(spawned);
         }
     }
@@ -29,5 +27,4 @@ public class ObjectPool : MonoBehaviour
 
         return result != null;
     }
-
 }

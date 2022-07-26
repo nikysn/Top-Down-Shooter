@@ -7,6 +7,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private Camera _camera;
 
+    private const string _horizontal = "Horizontal";
+    private const string _vertical = "Vertical";
+
     private Rigidbody2D _rigidbody;
     private Vector2 _currentPosition;
     private Vector2 _mousePosition;
@@ -18,8 +21,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        _currentPosition.x = Input.GetAxisRaw("Horizontal");
-        _currentPosition.y = Input.GetAxisRaw("Vertical");
+        _currentPosition.x = Input.GetAxisRaw(_horizontal);
+        _currentPosition.y = Input.GetAxisRaw(_vertical);
 
         _mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
     }
