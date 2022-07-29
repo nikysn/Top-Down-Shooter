@@ -213,9 +213,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2bfebc8d8f63e64ab27ba8a2bde2d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetState: {fileID: 0}
-  _transitionRange: 0
-  _rangetSpread: 0
+  _targetState: {fileID: 4465626359222623679}
+  _transitionRange: 0.5
+  _rangetSpread: 0.5
 --- !u!114 &7565899018256122581
 MonoBehaviour:
   m_ObjectHideFlags: 0
