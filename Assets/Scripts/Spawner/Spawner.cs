@@ -13,6 +13,7 @@ public class Spawner : ObjectPool
     private void SetEnemy(Enemy enemy, Vector3 spawnPoint)
     {
         enemy.gameObject.SetActive(true);
+
         enemy.transform.position = spawnPoint;
     }
 

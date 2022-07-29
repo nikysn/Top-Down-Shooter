@@ -19,6 +19,7 @@ public class Shooting : MonoBehaviour
         if (_currentTime <= 0)
         {
             Shoot();
+
         }
         else
         {

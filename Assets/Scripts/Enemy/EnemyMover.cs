@@ -21,7 +21,7 @@ public class EnemyMover : MonoBehaviour
         Vector3 direction = _target.transform.position - transform.position;
         direction.Normalize();
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
         _rigidbody.rotation = angle;
         _movement = direction;
 
