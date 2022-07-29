@@ -8,6 +8,9 @@ public class PlayerTracker : MonoBehaviour
 
     private void Update()
     {
-        transform.position = new Vector3(_player.transform.position.x, transform.position.y,transform.position.z);
+        if (_player != null)
+        {
+            transform.position = new Vector3(_player.transform.position.x, _player.transform.position.y, transform.position.z);
+        }
     }
 }

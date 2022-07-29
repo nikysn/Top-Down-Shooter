@@ -12,33 +12,33 @@ public class Player : MonoBehaviour
 
     public int Money { get; private set; }
     private Weapon _currentWeapon;
-    private int _currentHealth;
+    [SerializeField] private int _currentHealth;
     private Animator _animator;
 
     private void Start()
     {
         _currentWeapon = _weapons[0];
-        _currentHealth = _health;
+        
         _animator = GetComponent<Animator>();
     }
-
+    private void Awake()
+    {
+        _currentHealth = _health;
+    }
 
     public void ApplyDamage(int damage)
     {
-        _health -= damage;
+        _currentHealth -= damage;
 
-        if (_health <= 0)
-            Die();
-    }
-
-    public void Die()
-    {
-
+        if (_currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
     {
-        
+
     }
 
 }
