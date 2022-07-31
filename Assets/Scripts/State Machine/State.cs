@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyAnimation))]
 public abstract class State : MonoBehaviour
 {
     [SerializeField] private List<Transition> _transitions;
     protected Player Target { get; private set; }
+    protected EnemyAnimation Animator { get; private set; }
 
+    private void Start()
+    {
+        Animator = GetComponent<EnemyAnimation>();
+    }
     public void Enter(Player target)
     {
         if(enabled == false)
@@ -24,7 +30,7 @@ public abstract class State : MonoBehaviour
 
     public void Exit()
     {
-        if(enabled == true)
+        if(enabled)
         {
             foreach(var transition in _transitions)
             {
@@ -46,6 +52,4 @@ public abstract class State : MonoBehaviour
 
         return null;
     }
-
-
 }

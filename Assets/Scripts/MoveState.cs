@@ -6,7 +6,6 @@ public class MoveState : State
 {
     [SerializeField] private float _speed;
     [SerializeField] private Player _target;
-
     private Rigidbody2D _rigidbody;
     private Vector2 _movement;
 
@@ -14,9 +13,12 @@ public class MoveState : State
     {
         _target = GetComponent<Enemy>().Target;
         _rigidbody = GetComponent<Rigidbody2D>();
+       
+        if (Animator != null)
+        {
+            Animator.ÑhangeAnimationAttack(false);
+        }
     }
-
-
 
     private void Update()
     {
