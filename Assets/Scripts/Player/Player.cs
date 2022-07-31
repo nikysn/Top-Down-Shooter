@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int _currentHealth;
     private Animator _animator;
 
-    public event UnityAction<int,int> HealthChanged;
+    public event UnityAction<float> HealthChanged;
 
     private void Start()
     {
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     public void ApplyDamage(int damage)
     {
         _currentHealth -= damage;
-        HealthChanged?.Invoke(_currentHealth, _health);
+        HealthChanged?.Invoke(_currentHealth);
 
         if (_currentHealth <= 0)
         {
