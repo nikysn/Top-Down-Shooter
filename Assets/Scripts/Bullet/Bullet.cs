@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private GameObject _hitEffect;
     [SerializeField] private float _bulletForce = 15f;
-    [SerializeField] private int _damage = 15;
+    [SerializeField] private float _damage = 15;
     [SerializeField] private Transform _firePoint;
     [SerializeField] private float _lifeTime = 3f;
 
@@ -56,9 +56,9 @@ public class Bullet : MonoBehaviour
 
         foreach (Collider2D col in collider2D)
         {
-            if (col.GetComponent<Enemy>())
+            if (col.TryGetComponent(out Enemy enemy))
             {
-                DamageEnemy(col.transform);
+                DamageEnemy(enemy);
                 GameObject effect = Instantiate(_hitEffect, transform.position, Quaternion.identity);
                 Destroy(effect, 0.5f);
                 Destroy(gameObject);
@@ -118,14 +118,12 @@ public class Bullet : MonoBehaviour
 
      */
 
-    private void DamageEnemy(Transform enemy)
+    private void DamageEnemy(Enemy enemy)
     {
-        Enemy e = enemy.GetComponent<Enemy>();
 
-        if (e != null)
+        if (enemy != null)
         {
-            e.TakeDamage(_damage);
-            Debug.Log("Нанес урон");
+            enemy.TakeDamage(_damage,_bulletForce);
         }
     }
 }

@@ -8,6 +8,7 @@ public class EnemyAnimation : MonoBehaviour
 {
     private EnemyMover _enemyMover;
     private Animator _animator;
+    private const string Attack = "Attack";
 
 
     private void Awake()
@@ -17,6 +18,7 @@ public class EnemyAnimation : MonoBehaviour
 
     public void ÑhangeAnimationAttack(bool AttackEnabled)
     {
-         _animator.SetBool("Attack", AttackEnabled);
+         _animator.SetBool(Attack, AttackEnabled);
+       
     }
 }

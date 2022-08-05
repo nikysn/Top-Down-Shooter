@@ -460,7 +460,7 @@ MonoBehaviour:
   _transitions:
   - {fileID: 4313066474027344101}
   - {fileID: 3251385839554122737}
-  _speed: 9
+  _speed: 8
   _target: {fileID: 0}
 --- !u!114 &4313066474027344101
 MonoBehaviour:
@@ -488,7 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetState: {fileID: 3016116998956230520}
-  _transitionRange: 0.5
+  _transitionRange: 0.7
   _rangetSpread: 0.5
 --- !u!114 &3016116998956230520
 MonoBehaviour:
@@ -548,9 +548,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 5
-  _health: 40
+  _startingHealth: 40
   _reward: 0
+  _animator: {fileID: 0}
   _target: {fileID: 0}
+  _spawner: {fileID: 0}
   _corpsesEnemy:
   - {fileID: 2560046247359497480, guid: 8bb72b778e2ce094c8574f60e8d9228a, type: 3}
   - {fileID: 7834389745285955069, guid: 14778fdf56857794580c9e831a12eea5, type: 3}

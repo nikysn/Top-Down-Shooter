@@ -7,7 +7,7 @@ public abstract class Bar : MonoBehaviour
 {
     [SerializeField] protected Slider Slider;
 
-    protected float _delta = 0.03f;
+    protected float _delta = 0.3f;
 
    /* public void OnValueChanged(int value, int maxValue)
     {
