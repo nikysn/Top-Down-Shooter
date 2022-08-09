@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2957445598560237724}
   - component: {fileID: 6036566298135460197}
+  - component: {fileID: 6787528444141463604}
+  - component: {fileID: 3467498117888700173}
   m_Layer: 0
   m_Name: Bird1
   m_TagString: Untagged
@@ -84,3 +86,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6787528444141463604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2560046247359497480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a11b43b761e51394398fe782f44cd377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3467498117888700173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2560046247359497480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c5d9e871eb63584ca6811e8b36469d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _corpseModel: {fileID: 0}

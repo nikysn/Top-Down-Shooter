@@ -14,6 +14,9 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private Spawner _spawner;
     [SerializeField] private List<GameObject> _corpsesEnemy;
 
+    public event Action<Enemy> OnDeath;
+
+    private Corpse _corpse;
     private float _currentHealth;
     public Player Target => _target;
     public int StartingHealth => _startingHealth;
@@ -38,16 +41,35 @@ public abstract class Enemy : MonoBehaviour
 
         if (_currentHealth <= 0)
         {
-           /* int numberCorpsesBird = UnityEngine.Random.Range(0, _corpsesEnemy.Count);
-            GameObject corpseBird = Instantiate(_corpsesEnemy[numberCorpsesBird], new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-            Destroy(corpseBird, 10f);*/
-            _spawner.KillEnemy(this);
+            /* int numberCorpsesBird = UnityEngine.Random.Range(0, _corpsesEnemy.Count);
+             GameObject corpseBird = Instantiate(_corpsesEnemy[numberCorpsesBird], new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+             Destroy(corpseBird, 10f);*/
+            //_spawner.KillEnemy(this);
+            Disable();
         }
     }
 
-    public void Init(Player target, Spawner spawner)
+    public void Init(Player target)
     {
         _target = target;
-        _spawner = spawner;
+      //  _spawner = spawner;
+    }
+
+    public void SetCorpse(Corpse corpse)
+    {
+        _corpse = corpse;
+       // _corpse.Enable();
+    }
+
+    public void Enable()
+    {
+        gameObject.SetActive(true);
+    }
+
+    private void Disable()
+    {
+        OnDeath?.Invoke(this);
+        _corpse.ShowInPosition(transform.position);
+        gameObject.SetActive(false);
     }
 }

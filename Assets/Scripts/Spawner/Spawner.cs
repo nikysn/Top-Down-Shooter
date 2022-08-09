@@ -8,15 +8,26 @@ public class Spawner : ObjectPool
 {
     [SerializeField] private Enemy _birdPrefab;
     [SerializeField] private Enemy _fatsoPrefab;
+
     [SerializeField] private float _secondsBetweenSpawn;
     [SerializeField] private float _score;
     [SerializeField] private float _totalScore;
     [SerializeField] private Transform[] _spawnPoints;
-    [SerializeField] private List<GameObject> _corpsesBird;
-    [SerializeField] private List<GameObject> _corpsesFatso;
 
     private List<Enemy> _poolsBird = new List<Enemy>();
     private List<Enemy> _poolsFatso = new List<Enemy>();
+    private List<GameObject> _poolCorpsesBird = new List<GameObject>();
+    private List<GameObject> _poolCorpsesFatso = new List<GameObject>();
+
+    private Pool<Enemy> _poolBird;
+    private Pool<CorpseBird> _birdCorpse;
+    
+    private void Awake()
+    {
+      //  _poolBird = new Pool<Enemy>(_birdPrefab);
+      //  _birdCorpse = new Pool<CorpseBird>()
+    }
+
     private Coroutine _coroutine;
 
     public event UnityAction<float> OnEnemyDeath;
@@ -34,22 +45,35 @@ public class Spawner : ObjectPool
         OnEnemyDeath?.Invoke(_score);
         _totalScore += enemy.StartingHealth;
         enemy.gameObject.SetActive(false);
-        SetCorpse(enemy, _corpsesBird, _corpsesFatso);
+        SetCorpse(enemy, _poolCorpsesBird, _poolCorpsesFatso);
     }
 
     public void SetCorpse(Enemy enemy, List<GameObject> corpsesBird, List<GameObject> corpsesFatso)
     {
-        if (enemy = enemy.gameObject.GetComponent<Bird>())
+        GameObject corpse = null;
+
+        if (enemy is Bird bird)
         {
-            if (TryGetObjectCorpse(out GameObject corpseBird, corpsesBird))
+            if (GetObjectCorpse(out corpse, corpsesBird))
             {
-                corpseBird.gameObject.SetActive(true);
-                corpseBird.transform.position = enemy.transform.position;
+                SetActiveCorpse(bird, corpse);
             }
-            
+        }
+
+        if (enemy is Fatso fatso)
+        {
+            if (GetObjectCorpse(out corpse, corpsesFatso))
+            {
+                SetActiveCorpse(fatso, corpse);
+            }
         }
     }
 
+    private void SetActiveCorpse(Enemy enemy, GameObject corpse)
+    {
+        corpse.gameObject.SetActive(true);
+        corpse.transform.position = enemy.transform.position;
+    }
 
     private void TryActivateWave(int maxScore)
     {
@@ -63,11 +87,10 @@ public class Spawner : ObjectPool
 
     private void Start()
     {
-        Initialize(_birdPrefab, _corpsesBird, _poolsBird);
-        Initialize(_fatsoPrefab, _corpsesFatso, _poolsFatso);
+      //  Initialize(_birdPrefab, _prafabsCorpseBird, _poolsBird, _poolCorpsesBird);
+      //  Initialize(_fatsoPrefab, _prefabsCorpseFatso, _poolsFatso, _poolCorpsesFatso);
 
         StartCoroutine(SpawningEnemy(_poolsBird));
-        //  StartCoroutine(SpawningEnemy(_poolsFatso));
     }
 
 
