@@ -8,7 +8,6 @@ public class Bullet : MonoBehaviour
     [SerializeField] private GameObject _hitEffect;
     [SerializeField] private float _bulletForce = 15f;
     [SerializeField] private float _damage = 15;
-    //public LayerMask toHit;
 
     private float _rangeRadius = 0.1f;
 

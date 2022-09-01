@@ -17,6 +17,7 @@ public class AttackState : State
             Attack();
             _lastAttackTime = _delay;
         }
+
         _lastAttackTime -= Time.deltaTime;
     }
 

@@ -20,7 +20,6 @@ public abstract class Item : MonoBehaviour
         }
     }
 
-
     public void SetDeathShowTime(float deathShowTime)
     {
         _showTimeAwater = new WaitForSeconds(deathShowTime);
@@ -28,7 +27,6 @@ public abstract class Item : MonoBehaviour
 
     public void ShowInPosition(Vector3 position)
     {
-
         int maxNumber = 5;
         int numberRundom = Random.Range(0, maxNumber);
 
