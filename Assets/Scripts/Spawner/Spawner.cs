@@ -1,45 +1,114 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class Spawner : ObjectPool
+[RequireComponent(typeof(WaveControl))]
+[RequireComponent(typeof(Score))]
+public class Spawner : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemyPrefab;
-    [SerializeField] private float _secondsBetweenSpawn;
+    [SerializeField] private Player _target;
+    [SerializeField] private float _interval = 1;
+    [SerializeField] private float _deathShowTime = 5;
+    [SerializeField] private float _deathShowTimeItem = 15;
     [SerializeField] private Transform[] _spawnPoints;
-    
 
-    private float _elapserTime = 0;
+    private Score _score;
+    private WaveControl _waveControl;
+    private WaitForSeconds _sleep;
+    private Coroutine _coroutine;
 
-
-    private void SetEnemy(Enemy enemy, Vector3 spawnPoint)
+    private void Awake()
     {
-        enemy.gameObject.SetActive(true);
-        enemy.transform.position = spawnPoint;
-        
+        _waveControl = GetComponent<WaveControl>();
+        _score = GetComponent<Score>();
+        _sleep = new WaitForSeconds(_interval);
     }
 
     private void Start()
     {
-        Initialize(_enemyPrefab);
+        StartSpawnCoroutine(_waveControl._birdPool);
     }
 
-    private void Update()
+    public IEnumerator SpawnCoroutine(EnemyPool enemyPool)
     {
-        _elapserTime += Time.deltaTime;
-
-        if (_elapserTime >= _secondsBetweenSpawn)
+        while (true)
         {
-            if (TryGetObject(out Enemy enemy))
-            {
-                _elapserTime = 0;
-
-                int spawnPointNumber = Random.Range(0, _spawnPoints.Length);
-                
-                SetEnemy(enemy, _spawnPoints[spawnPointNumber].position);
- 
-            }
+            SpawnObjects(enemyPool);
+            yield return _sleep;
         }
     }
 
+    public void StartSpawnCoroutine(EnemyPool enemyPool)
+    {
+        _coroutine = StartCoroutine(SpawnCoroutine(enemyPool));
+    }
+
+    private void SpawnObjects(EnemyPool enemyPool)
+    {
+        Enemy enemy = enemyPool.GetEnemy();
+
+        SpawnEnemy(enemy);
+
+        SpawnCorpse(enemyPool, enemy);
+
+        SpawnItem(enemyPool, enemy);
+    }
+
+    private void OnEnemyDeath(Enemy enemy)
+    {
+        _score.GetScore(enemy);
+        enemy.OnDeath -= OnEnemyDeath;
+    }
+
+    private void SpawnCorpse(EnemyPool enemyPool, Enemy enemy)
+    {
+        if (enemy != null && enemy._corpse == null)
+        {
+            Corpse corpse = enemyPool.GetRandomCorpse();
+            corpse.gameObject.SetActive(false);
+            corpse.SetDeathShowTime(_deathShowTime);
+            enemy.SetCorpse(corpse);
+        }
+    }
+
+    private void SpawnItem(EnemyPool enemyPool, Enemy enemy)
+    {
+        if (enemy != null && enemy._item == null)
+        {
+            Item item = enemyPool.GetRandomItem();
+
+            if (item.GetComponent<Money>())
+            {
+                _score.Init(item.GetComponent<Money>());
+            }
+
+            item.Disable();
+            item.SetDeathShowTime(_deathShowTimeItem);
+            enemy.SetItem(item);
+        }
+    }
+
+    private void SpawnEnemy(Enemy enemy)
+    {
+        Vector3 ramdomSpawn = new Vector3(Random.Range(-18f, 18f), Random.Range(-9f, 9f));
+
+        if (enemy != null)
+        {
+            if (enemy.GetComponent<Bird>())
+            {
+                enemy.transform.position = _spawnPoints[Random.Range(0, _spawnPoints.Length - 1)].position;
+            }
+            else
+            {
+                enemy.transform.position = ramdomSpawn;
+            }
+
+            enemy.Enable();
+            enemy.OnDeath += OnEnemyDeath;
+            enemy.Init(_target);
+            _waveControl.NextWave += enemy.SetSpeed;
+        }
+    }
 }

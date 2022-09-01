@@ -2,23 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyMover))]
 [RequireComponent(typeof(Animator))]
 
 public class EnemyAnimation : MonoBehaviour
 {
-    private EnemyMover _enemyMover;
     private Animator _animator;
-
+    private const string Attack = "Attack";
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _enemyMover = GetComponent<EnemyMover>();
     }
 
-    public void OnAnimationMove()
+    public void ÑhangeAnimationAttack(bool AttackEnabled)
     {
-       // _animator.SetBool(PlayerAnimationController.Params.Run, true);
+         _animator.SetBool(Attack, AttackEnabled);
     }
 }

@@ -1,28 +1,47 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Enemy : MonoBehaviour
+[ RequireComponent(typeof(Rigidbody))]
+[ RequireComponent(typeof(Animator))]
+public abstract class Enemy : MonoBehaviour
 {
-    [SerializeField] private int _damage;
-    [SerializeField] private int _health;
-    [SerializeField] private int _reward;
     [SerializeField] private Player _target;
-    
+    [SerializeField] private int _damage;
+    [SerializeField] private int _startingHealth;
+    [SerializeField] private float _speedMultiplier = 1.2f;
+    private Rigidbody2D _rigidbody;
+    private float _currentHealth;
+
+    public Corpse _corpse { get; private set; }
+    public Animator Animator { get; private set; }
+    public MoveState MoveState { get; private set; }
+    public Item _item { get; private set; }
     public Player Target => _target;
-    
+    public int StartingHealth => _startingHealth;
 
-    public event UnityAction Dying;
+    public event Action<Enemy> OnDeath;
 
-
-    public void TakeDamage(int damage)
+    private void OnEnable()
     {
-        _health -= damage;
+        MoveState = GetComponent<MoveState>();
+        _currentHealth = _startingHealth;
+    }
 
-        if(_health <= 0)
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+    }
+    public void TakeDamage(float damage, float bulletForce)
+    {
+        _currentHealth -= damage;
+        _rigidbody.AddForce(transform.up * bulletForce, ForceMode2D.Impulse);
+
+        if (_currentHealth <= 0)
         {
-            gameObject.SetActive(false);
+            Disable();
         }
     }
 
@@ -31,7 +50,37 @@ public class Enemy : MonoBehaviour
         _target = target;
     }
 
-   
-    
+    public void SetCorpse(Corpse corpse)
+    {
+        if (_corpse == null)
+        {
+            _corpse = corpse;
+        }
+    }
 
+    public void SetItem(Item item)
+    {
+        if (_item == null)
+        {
+            _item = item;
+        }
+    }
+
+    public void Enable()
+    {
+        gameObject.SetActive(true);
+    }
+
+    private void Disable()
+    {
+        OnDeath?.Invoke(this);
+        _corpse.ShowInPosition(transform.position);
+        _item.ShowInPosition(transform.position);
+        gameObject.SetActive(false);
+    }
+
+    public void SetSpeed()
+    {
+        MoveState.ChangeSpeed(_speedMultiplier);
+    }
 }

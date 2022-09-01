@@ -1,41 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private GameObject _hitEffect;
     [SerializeField] private float _bulletForce = 15f;
+    [SerializeField] private float _damage = 15;
+    //public LayerMask toHit;
+
+    private float _rangeRadius = 0.1f;
+
+    private void Update()
+    {
+        DamageObject();
+    }
+
+    public void DamageObject()
+    {
+        Collider2D[] collider2D = Physics2D.OverlapCircleAll(transform.position, _rangeRadius);
+
+        foreach (Collider2D col in collider2D)
+        {
+            if (col.TryGetComponent(out Enemy enemy))
+            {
+                DamageEnemy(enemy);
+                GameObject effect = Instantiate(_hitEffect, transform.position, Quaternion.identity);
+                Destroy(effect, 0.5f);
+                Disable();
+                break;
+            }
+        }
+    }
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        GameObject effect =  Instantiate(_hitEffect, transform.position, Quaternion.identity);
-        Destroy(effect, 0.5f);
-        Destroy(gameObject);
-    }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        Destroy(gameObject);
         GameObject effect = Instantiate(_hitEffect, transform.position, Quaternion.identity);
         Destroy(effect, 0.5f);
-        List<Enemy> _enemies = new List<Enemy>();
+        Disable();
+    }
 
-        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+    private void DamageEnemy(Enemy enemy)
+    {
+
+        if (enemy != null)
         {
-            
-            _enemies.Add(enemy);
-
-           // enemy.GetComponent<Rigidbody2D>().AddForce(- enemy.transform.right * _bulletForce, ForceMode2D.Impulse);
-           //  Debug.Log("в тригере");
+            enemy.TakeDamage(_damage, _bulletForce);
         }
+    }
 
-        foreach(var bird in _enemies)
-        {
-            //Debug.Log(bird.name);
-        }
+    public void Enable()
+    {
+        gameObject.SetActive(true);
+    }
 
-        Debug.Log(_enemies.Count);
+    private void Disable()
+    {
+        gameObject.SetActive(false);
     }
 }
