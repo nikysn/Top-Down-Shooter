@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(SpawnerAdam))]
+[RequireComponent(typeof(Spawner))]
 public class WaveControl : MonoBehaviour
 {
     [field: SerializeField] public EnemyPool _birdPool { get; private set; }
@@ -11,7 +11,7 @@ public class WaveControl : MonoBehaviour
     [SerializeField] private EnemyPool _moosePool;
 
     private List<EnemyPool> _enemyPools = new List<EnemyPool>();
-    private SpawnerAdam _spawnerAdam;
+    private Spawner _spawnerAdam;
     private Score _score;
     private List<float> _waves;
     private int _currentWave = 0;
@@ -26,7 +26,7 @@ public class WaveControl : MonoBehaviour
     }
     private void Awake()
     {
-        _spawnerAdam = GetComponent<SpawnerAdam>();
+        _spawnerAdam = GetComponent<Spawner>();
         _score = GetComponent<Score>();
     }
 

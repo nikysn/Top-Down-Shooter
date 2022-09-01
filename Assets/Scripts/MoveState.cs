@@ -6,13 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(Enemy))]
 public class MoveState : State
 {
-   // [SerializeField] private float _speedMultiplier;
+    [SerializeField] private float _speedMultiplier;
     [SerializeField] private Player _target;
+    [SerializeField] private float _speed;
 
     private Rigidbody2D _rigidbody;
-    [SerializeField] public float Speed { get; set; }
-
-    
 
     private void OnEnable()
     {
@@ -34,12 +32,12 @@ public class MoveState : State
 
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
             _rigidbody.rotation = angle;
-            _rigidbody.AddForce(direction * Speed);
+            _rigidbody.AddForce(direction * _speed);
         }
     }
 
     public void ChangeSpeed(float speed)
     {
-        Speed *= speed;
+        _speed *= speed;
     }
 }

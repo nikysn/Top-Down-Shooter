@@ -11,9 +11,7 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] private Player _target;
     [SerializeField] private int _damage;
     [SerializeField] private int _startingHealth;
-    [SerializeField] private int _reward;
     [SerializeField] private float _speedMultiplier = 1.2f;
-
     private Rigidbody2D _rigidbody;
     private float _currentHealth;
 
@@ -28,6 +26,7 @@ public abstract class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
+        MoveState = GetComponent<MoveState>();
         _currentHealth = _startingHealth;
     }
 

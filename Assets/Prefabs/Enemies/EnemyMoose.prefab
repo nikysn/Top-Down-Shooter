@@ -133,6 +133,7 @@ MonoBehaviour:
   _damage: 35
   _startingHealth: 150
   _reward: 0
+  _speedMultiplier: 1.2
 --- !u!70 &4620243406007047806
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -189,9 +190,9 @@ MonoBehaviour:
   _transitions:
   - {fileID: 1740275247169381816}
   - {fileID: 2149606559183261944}
-  _speed: 30
   _speedMultiplier: 1.1
   _target: {fileID: 0}
+  _speed: 25
 --- !u!114 &1740275247169381816
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(WaveControl))]
 [RequireComponent(typeof(Score))]
-public class SpawnerAdam : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     [SerializeField] private Player _target;
     [SerializeField] private float _interval = 1;
@@ -39,7 +39,7 @@ public class SpawnerAdam : MonoBehaviour
             yield return _sleep;
         }
     }
-    
+
     public void StartSpawnCoroutine(EnemyPool enemyPool)
     {
         _coroutine = StartCoroutine(SpawnCoroutine(enemyPool));
@@ -48,7 +48,6 @@ public class SpawnerAdam : MonoBehaviour
     private void SpawnObjects(EnemyPool enemyPool)
     {
         Enemy enemy = enemyPool.GetEnemy();
-        _waveControl.NextWave += enemy.SetSpeed;
 
         SpawnEnemy(enemy);
 
@@ -108,8 +107,8 @@ public class SpawnerAdam : MonoBehaviour
 
             enemy.Enable();
             enemy.OnDeath += OnEnemyDeath;
-            
             enemy.Init(_target);
+            _waveControl.NextWave += enemy.SetSpeed;
         }
     }
 }
