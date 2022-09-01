@@ -13,6 +13,7 @@ public abstract class State : MonoBehaviour
     {
         Animator = GetComponent<EnemyAnimation>();
     }
+
     public void Enter(Player target)
     {
         if(enabled == false)

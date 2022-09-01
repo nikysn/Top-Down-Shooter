@@ -7,7 +7,6 @@ public class NoDistanceTransition : Transition
     [SerializeField] private float _transitionRange;
     [SerializeField] private float _rangetSpread;
 
-
     private void Start()
     {
         _transitionRange += Random.Range(-_rangetSpread, _rangetSpread);
@@ -21,7 +20,6 @@ public class NoDistanceTransition : Transition
             {
                 NeedTransit = true;
             }
-
         }
     }
 }

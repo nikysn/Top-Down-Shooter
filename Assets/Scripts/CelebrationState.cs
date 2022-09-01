@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CelebrationState : State
 {
-    private Animator _animator;
+  /*  private Animator _animator;
 
     private void Awake()
     {
@@ -19,5 +19,5 @@ public class CelebrationState : State
     private void OnDisable()
     {
         _animator.StopPlayback();
-    }
+    }*/
 }

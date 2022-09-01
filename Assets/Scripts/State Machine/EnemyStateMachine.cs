@@ -32,7 +32,6 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
 
-
     private void Reset(State startState)
     {
         _currentState = startState;

@@ -15,13 +15,13 @@ public class Pool<T> where T : MonoBehaviour
         _parent = parent;
     }
 
-    public T GetItem(int countItem)
+    public T GetEnemy(float countItem)
     {
         foreach (var item in _objects)
             if (item.gameObject.activeSelf == false)
                 return item;
 
-        if (_objects.Count < countItem )
+        if (_objects.Count < countItem)
         {
             var newItem = GameObject.Instantiate(_prefab, _parent);
             _objects.Add(newItem);
@@ -29,5 +29,27 @@ public class Pool<T> where T : MonoBehaviour
         }
 
         return null;
+    }
+
+    public T GetCorpseAndItem(float countItem)
+    {
+        if (_objects.Count < countItem)
+        {
+            var newItem = GameObject.Instantiate(_prefab, _parent);
+            _objects.Add(newItem);
+            return newItem;
+        }
+        return null;
+    }
+
+    public T GetBullet()
+    {
+        foreach (var item in _objects)
+            if (item.gameObject.activeSelf == false)
+                return item;
+
+        var newItem = GameObject.Instantiate(_prefab, _parent);
+        _objects.Add(newItem);
+        return newItem;
     }
 }

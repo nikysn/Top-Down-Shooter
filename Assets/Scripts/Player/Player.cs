@@ -4,24 +4,23 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SpriteRenderer))]
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private int _health;
-    [SerializeField] private List<Weapon> _weapons;
-
-    public int Money { get; private set; }
-    private Weapon _currentWeapon;
     [SerializeField] private int _currentHealth;
-    private Animator _animator;
+    [SerializeField] private Sprite _spriteTwoHandedWeapon;
+    [SerializeField] private Sprite _spriteOneHandedWeapon;
+
+    private SpriteRenderer _spriteRenderer;
 
     public event UnityAction<float> HealthChanged;
+    public event UnityAction Die;
 
     private void Start()
     {
-        _currentWeapon = _weapons[0];
-        
-        _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void Awake()
     {
@@ -35,8 +34,21 @@ public class Player : MonoBehaviour
 
         if (_currentHealth <= 0)
         {
+            Die?.Invoke();
             Destroy(gameObject);
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<OneHandedWeapon>(out OneHandedWeapon weapon))
+        {
+            _spriteRenderer.sprite = _spriteOneHandedWeapon;
+        }
+
+        if (collision.TryGetComponent<TwoHandedWeapon>(out TwoHandedWeapon tweapon))
+        {
+            _spriteRenderer.sprite = _spriteTwoHandedWeapon;
+        }
+    }
 }

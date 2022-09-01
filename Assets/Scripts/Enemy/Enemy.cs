@@ -4,25 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[ RequireComponent(typeof(Rigidbody))]
+[ RequireComponent(typeof(Animator))]
 public abstract class Enemy : MonoBehaviour
 {
+    [SerializeField] private Player _target;
     [SerializeField] private int _damage;
     [SerializeField] private int _startingHealth;
     [SerializeField] private int _reward;
-    [SerializeField] private Animator _animator;
-    [SerializeField] private Player _target;
-    [SerializeField] private Spawner _spawner;
-    [SerializeField] private List<GameObject> _corpsesEnemy;
-
-    public event Action<Enemy> OnDeath;
-
-    private Corpse _corpse;
-    private float _currentHealth;
-    public Player Target => _target;
-    public int StartingHealth => _startingHealth;
-    public Animator Animator => _animator;
+    [SerializeField] private float _speedMultiplier = 1.2f;
 
     private Rigidbody2D _rigidbody;
+    private float _currentHealth;
+
+    public Corpse _corpse { get; private set; }
+    public Animator Animator { get; private set; }
+    public MoveState MoveState { get; private set; }
+    public Item _item { get; private set; }
+    public Player Target => _target;
+    public int StartingHealth => _startingHealth;
+
+    public event Action<Enemy> OnDeath;
 
     private void OnEnable()
     {
@@ -31,7 +33,6 @@ public abstract class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
     public void TakeDamage(float damage, float bulletForce)
@@ -41,10 +42,6 @@ public abstract class Enemy : MonoBehaviour
 
         if (_currentHealth <= 0)
         {
-            /* int numberCorpsesBird = UnityEngine.Random.Range(0, _corpsesEnemy.Count);
-             GameObject corpseBird = Instantiate(_corpsesEnemy[numberCorpsesBird], new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-             Destroy(corpseBird, 10f);*/
-            //_spawner.KillEnemy(this);
             Disable();
         }
     }
@@ -52,13 +49,22 @@ public abstract class Enemy : MonoBehaviour
     public void Init(Player target)
     {
         _target = target;
-      //  _spawner = spawner;
     }
 
     public void SetCorpse(Corpse corpse)
     {
-        _corpse = corpse;
-       // _corpse.Enable();
+        if (_corpse == null)
+        {
+            _corpse = corpse;
+        }
+    }
+
+    public void SetItem(Item item)
+    {
+        if (_item == null)
+        {
+            _item = item;
+        }
     }
 
     public void Enable()
@@ -70,6 +76,12 @@ public abstract class Enemy : MonoBehaviour
     {
         OnDeath?.Invoke(this);
         _corpse.ShowInPosition(transform.position);
+        _item.ShowInPosition(transform.position);
         gameObject.SetActive(false);
+    }
+
+    public void SetSpeed()
+    {
+        MoveState.ChangeSpeed(_speedMultiplier);
     }
 }

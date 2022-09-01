@@ -11,14 +11,12 @@ public class HealthBar : Bar
     private void OnEnable()
     {
         _player.HealthChanged += OnHealthChanged;
-       // Slider.value = 1;
     }
 
     private void OnDisable()
     {
         _player.HealthChanged -= OnHealthChanged;
     }
-
 
     private IEnumerator ChangeHealth(float currentHealth)
     {
