@@ -6,13 +6,12 @@ using UnityEngine.Events;
 public class Money : Item
 {
     private float _money = 50f;
-    public event UnityAction<float> ConveyMoney;
-
+    public event UnityAction<float> MoneyPicked;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Player>(out Player player))
         {
-            ConveyMoney?.Invoke(_money);
+            MoneyPicked?.Invoke(_money);
             Disable();
         }
     }

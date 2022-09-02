@@ -25,7 +25,7 @@ public class AttackState : State
     {
         if (Target != null)
         {
-            Animator.ÑhangeAnimationAttack(true);
+            Animator.ChangeAnimationAttack(true);
             Target.ApplyDamage(_damage);
         }
     }

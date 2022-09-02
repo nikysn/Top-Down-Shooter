@@ -19,8 +19,6 @@ public class Shooting : MonoBehaviour
     private float _fireRate;
     private int _countBullet;
     private int _currentCountBullet = 6;
-    private float _readyForNextShot;
-    private float _currentTime;
 
     private const string Fire = "Fire1";
     private const string Shoot = "Shoot";
@@ -32,16 +30,9 @@ public class Shooting : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    private void Start()
     {
-        if (_currentTime <= 0)
-        {
-            TakeShoot();
-        }
-        else
-        {
-            Reload();
-        }
+        StartCoroutine(TakeShoot());
     }
 
     public void SetGunSettings(GunSettings gunSettings)
@@ -58,18 +49,21 @@ public class Shooting : MonoBehaviour
 
     private void OnEnable()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         SetGunSettings(_gunSettings);
     }
 
-    private void TakeShoot()
+    private void Reload()
     {
-        if (Input.GetButton(Fire))
-        {
-            if (Time.time > _readyForNextShot)
-            {
-                _readyForNextShot = Time.time + 1 / _fireRate;
+        _currentCountBullet = _countBullet;
+    }
 
+    private IEnumerator TakeShoot()
+    {
+        while (true)
+        {
+            if (Input.GetButton(Fire))
+            {
+                var bulletCooldown = new WaitForSeconds(.1f / _fireRate);
                 Bullet bullet = _bulletPool.GetBullet();
                 bullet.transform.position = _firePoint.position;
                 bullet.Enable();
@@ -79,17 +73,19 @@ public class Shooting : MonoBehaviour
 
                 _gunAnimator.SetTrigger(Shoot);
 
+                yield return bulletCooldown;
+
                 if (_currentCountBullet <= 0)
                 {
-                    _currentTime = _reloadTime;
+                    Reload();
+                    var reloadCooldown = new WaitForSeconds(_reloadTime);
+                    yield return reloadCooldown;
                 }
             }
+            else
+            {
+                yield return null;
+            }
         }
-    }
-
-    private void Reload()
-    {
-        _currentTime -= Time.deltaTime;
-        _currentCountBullet = _countBullet;
     }
 }

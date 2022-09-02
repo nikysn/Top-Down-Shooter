@@ -19,7 +19,7 @@ public class MoveState : State
        
         if (Animator != null)
         {
-            Animator.ÑhangeAnimationAttack(false);
+            Animator.ChangeAnimationAttack(false);
         }
     }
 
@@ -30,8 +30,7 @@ public class MoveState : State
             Vector3 direction = _target.transform.position - transform.position;
             direction.Normalize();
 
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
-            _rigidbody.rotation = angle;
+            transform.up =- direction;
             _rigidbody.AddForce(direction * _speed);
         }
     }

@@ -460,7 +460,7 @@ MonoBehaviour:
   _transitions:
   - {fileID: 4313066474027344101}
   - {fileID: 3251385839554122737}
-  _speedMultiplier: 1.1
+  _speedMultiplier: 1.05
   _target: {fileID: 0}
   _speed: 8
 --- !u!114 &4313066474027344101
@@ -551,5 +551,4 @@ MonoBehaviour:
   _target: {fileID: 0}
   _damage: 5
   _startingHealth: 40
-  _reward: 0
   _speedMultiplier: 1.2

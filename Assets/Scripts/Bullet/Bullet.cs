@@ -8,12 +8,13 @@ public class Bullet : MonoBehaviour
     [SerializeField] private GameObject _hitEffect;
     [SerializeField] private float _bulletForce = 15f;
     [SerializeField] private float _damage = 15;
+    [SerializeField] private float _lifeTimeBullet = 4f;
 
     private float _rangeRadius = 0.1f;
 
-    private void Update()
+    private void OnEnable()
     {
-        DamageObject();
+        StartCoroutine(LifeTimeBullet());
     }
 
     public void DamageObject()
@@ -33,29 +34,37 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject effect = Instantiate(_hitEffect, transform.position, Quaternion.identity);
-        Destroy(effect, 0.5f);
-        Disable();
+        if (collision.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            DamageObject();
+        }
+    }
+    public void Enable()
+    {
+        gameObject.SetActive(true);
     }
 
     private void DamageEnemy(Enemy enemy)
     {
-
         if (enemy != null)
         {
             enemy.TakeDamage(_damage, _bulletForce);
         }
     }
 
-    public void Enable()
-    {
-        gameObject.SetActive(true);
-    }
-
     private void Disable()
     {
-        gameObject.SetActive(false);
+        if (gameObject != null)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator LifeTimeBullet()
+    {
+        yield return  new WaitForSeconds(_lifeTimeBullet);
+        Disable();
     }
 }
