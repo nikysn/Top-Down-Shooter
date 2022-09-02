@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [ RequireComponent(typeof(Rigidbody))]
-[ RequireComponent(typeof(Animator))]
+[ RequireComponent(typeof(MoveState))]
 public abstract class Enemy : MonoBehaviour
 {
     [SerializeField] private Player _target;
@@ -16,7 +16,6 @@ public abstract class Enemy : MonoBehaviour
     private float _currentHealth;
 
     public Corpse _corpse { get; private set; }
-    public Animator Animator { get; private set; }
     public MoveState MoveState { get; private set; }
     public Item _item { get; private set; }
     public Player Target => _target;
@@ -37,7 +36,8 @@ public abstract class Enemy : MonoBehaviour
     public void TakeDamage(float damage, float bulletForce)
     {
         _currentHealth -= damage;
-        _rigidbody.AddForce(transform.up * bulletForce, ForceMode2D.Impulse);
+        var direction =- (_target.transform.position - transform.position).normalized;
+        _rigidbody.AddForce(direction * bulletForce, ForceMode2D.Impulse);
 
         if (_currentHealth <= 0)
         {

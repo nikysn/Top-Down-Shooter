@@ -7,6 +7,7 @@ using UnityEngine;
 public class EnemyAnimation : MonoBehaviour
 {
     private Animator _animator;
+
     private const string Attack = "Attack";
 
     private void Awake()
@@ -14,7 +15,7 @@ public class EnemyAnimation : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public void ÑhangeAnimationAttack(bool AttackEnabled)
+    public void ChangeAnimationAttack(bool AttackEnabled)
     {
          _animator.SetBool(Attack, AttackEnabled);
     }

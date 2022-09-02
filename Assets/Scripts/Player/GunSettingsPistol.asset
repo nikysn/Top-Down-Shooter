@@ -16,6 +16,6 @@ MonoBehaviour:
   _sprite: {fileID: 21300000, guid: 37ee95f2f25c75e4a9057247de9ac63d, type: 3}
   _bulletForce: 20
   _reloadTime: 2
-  _fireRate: 2
+  _fireRate: 0.5
   _playerSpeed: 2
   _countBullet: 6

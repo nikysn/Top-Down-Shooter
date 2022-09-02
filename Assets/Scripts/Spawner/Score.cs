@@ -32,10 +32,10 @@ public class Score : MonoBehaviour
     public void Init(Money money)
     {
         _money = money;
-        _money.ConveyMoney += TakeMoney;
+        _money.MoneyPicked += OnMoneyPicked;
     }
 
-    private void TakeMoney(float money)
+    private void OnMoneyPicked(float money)
     {
         CurrentScore += money;
         TotalScore += money;

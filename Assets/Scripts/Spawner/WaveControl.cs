@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Spawner))]
+[RequireComponent(typeof(Score))]
 public class WaveControl : MonoBehaviour
 {
     [field: SerializeField] public EnemyPool _birdPool { get; private set; }
